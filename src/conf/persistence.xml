@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="HotelPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>hotel.com.entities.Clients</class>
+    <class>hotel.com.entities.Estancies</class>
+    <class>hotel.com.entities.EstanciesHostes</class>
+    <class>hotel.com.entities.Habitacions</class>
+    <class>hotel.com.entities.PropietatsHotel</class>
+    <class>hotel.com.entities.Comentaris</class>
+    <class>hotel.com.entities.TipoHabitacions</class>
+    <class>hotel.com.entities.Nacionalitats</class>
+    <class>hotel.com.entities.TipoDocuments</class>
+    <class>hotel.com.entities.Empleats</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/hotel?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="Fosca82"/>
+    </properties>
+  </persistence-unit>
+</persistence>
