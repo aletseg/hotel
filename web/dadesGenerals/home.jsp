@@ -76,17 +76,18 @@
                                 </c:forEach>
                    </table> 
                        
-                        <div id="menu" class="collection" style="display:none">
-                            <ul>
-                                <li id="menu_altaClient" class="collection-item">Check-in Client</li>
-                                <li id="menu_afegirClient" class="collection-item">Check-out Client</li>
-                                <li id="menu_afegirMesClients" class="collection-item">Afegeix un altre client</li>
-                                <li id="menu_veureFitxa" class="collection-item">Veure fitxa client</li>
-                                <li id="menu_noDisponible" class="collection-item">Marcar com no disponible</li>
-                            </ul>
-                        </div>
+                <ul id="contextMenu" class="dropdown-menu" role="menu" style="display:none" >
+    <li><a tabindex="-1" href="#">Action</a></li>
+    <li><a tabindex="-1" href="#">Another action</a></li>
+    <li><a tabindex="-1" href="#">Something else here</a></li>
+    <li class="divider"></li>
+    <li><a tabindex="-1" href="#">Separated link</a></li>
+</ul>
+        
                       
                 </div>
+                        
+                        
                 </section>        
                         <section id="checkIn" class="checkIn indigo lighten-4 col s12">
                     <div class="container">
@@ -131,18 +132,70 @@
                                <script type="text/javascript" src="js/materialize.min.js"></script> 
                                <script type="text/javascript" src="js/utils/utilitats.js"></script>
                                <script type="text/javascript">
-                                    $(document).ready(function(){
-                                        estatHabitacions();
-                                        $('select').material_select();
-                                    var menu = $('#menu');
-                                    $('#habitacions').on('click',function(){
-////                                      menu.style.top = event.clientY + 'px';
-////                                      menu.style.left = event.clientX + 'px';
-                                   menu.show();
-                                    }); 
-                                  
-                                  
-                                    });//final del document ready
+                                    (function ($, window) {
+alert('hpla');
+    $.fn.contextMenu = function (settings) {
+        alert('settings');
+        return this.each(function () {
+               
+            // Open context menu
+            $(this).on("contextmenu", function (e) {
+                alert('contextmenu');
+                // return native menu if pressing control
+                if (e.ctrlKey) return;
+                
+                //open menu
+                var $menu = $(settings.menuSelector)
+                    .data("invokedOn", $(e.target))
+                    .show()
+                    .css({
+                        position: "absolute",
+                        left: getMenuPosition(e.clientX, 'width', 'scrollLeft'),
+                        top: getMenuPosition(e.clientY, 'height', 'scrollTop')
+                    })
+                    .off('click')
+                    .on('click', 'a', function (e) {
+                        $menu.hide();
+                
+                        var $invokedOn = $menu.data("invokedOn");
+                        var $selectedMenu = $(e.target);
+                        
+                        settings.menuSelected.call(this, $invokedOn, $selectedMenu);
+                    });
+                
+                return false;
+            });
+
+            //make sure menu closes on any click
+            $('body').click(function () {
+                $(settings.menuSelector).hide();
+            });
+        });
+        
+        function getMenuPosition(mouse, direction, scrollDir) {
+            var win = $(window)[direction](),
+                scroll = $(window)[scrollDir](),
+                menu = $(settings.menuSelector)[direction](),
+                position = mouse + scroll;
+                        
+            // opening menu would pass the side of the page
+            if (mouse + menu > win && menu < mouse) 
+                position -= menu;
+            
+            return position;
+        }    
+
+    };
+})(jQuery, window);
+
+$("#taulaHabitacions td").contextMenu({
+    menuSelector: "#contextMenu",
+    menuSelected: function (invokedOn, selectedMenu) {
+        var msg = "You selected the menu item '" + selectedMenu.text() +
+            "' on the value '" + invokedOn.text() + "'";
+        alert(msg);
+    }
+});
                                 
                             
                                </script>
