@@ -79,3 +79,7 @@ and open the template in the editor.
 section{
     margin:5%;
 }
+
+#menu{
+    display:none;
+}

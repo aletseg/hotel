@@ -9,3 +9,21 @@ function estatHabitacions(){
     $("i[name='noDisponible'").addClass("grey-text text-lighten-1");
 }
 
+function obrirForm(url){
+     window.open(url, "nuevo", "directories=no, location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no, width=400, height=400");
+}
+
+function carregaDadesCheckIn(opcio,numHab){
+    $.ajax({
+       url:'dadesGestio', 
+       type:'GET',
+       async: true,
+       data:'opcio='+opcio+'&numHab='+numHab,
+       success:function(resposta){
+          if(resposta===true){
+                obrirForm('formCheckIn.jsp');
+                // Falta acabar, a saber dades del servlet
+          } 
+       }
+    });//Final ajax
+}

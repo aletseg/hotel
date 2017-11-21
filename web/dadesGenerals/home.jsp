@@ -19,10 +19,26 @@
         <title>Home</title>
     </head>
     <body>
-        <div>
-            <h1>Benvingut ${empleat.nom}</h1>
-            <h2>ID: ${empleat.idEmpleat}</h2>
+        <!--Dropdown estructure -->
+        <ul id="dropdow1" class="dropdown-content">
+            <li><a href="#!">Cambiar Preus</a></li>
+             <li><a href="#!">Alta empleat</a></li>
+              <li><a href="#!">Baixa empleat</a></li>
+        </ul>
+        <nav>
+        <div class="nav-wrapper purple darken-3">
+            <a href="#" clas="brand-logo">Hostal</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="#">Cambiar Usuari</a></li>
+                <li><a href="#">Crear fitxa Policia</a></li>
+                 <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Dropdown<i class="material-icons right">arrow_drop_down</i></a></li>
+            </ul>
         </div>
+        </nav> 
+        <div class="container">
+            <h1>Recepció</h1>
+          <h5>Empleat: ${empleat.nom}</h5>
+          </div>
         <section class="col s12">
         <div class="container z-depth-5" id="habitacions">
             <h2>Habitacions</h2>
@@ -76,12 +92,12 @@
                                 </c:forEach>
                    </table> 
                        
-                <ul id="contextMenu" class="dropdown-menu" role="menu" style="display:none" >
-    <li><a tabindex="-1" href="#">Action</a></li>
-    <li><a tabindex="-1" href="#">Another action</a></li>
-    <li><a tabindex="-1" href="#">Something else here</a></li>
-    <li class="divider"></li>
-    <li><a tabindex="-1" href="#">Separated link</a></li>
+        <ul id="contextMenu" class="dropdown-menu" role="menu" style="display:none" >
+           <li><a id="checkIn" tabindex="-1" href="<c:url value="dadesGestio?opcio=carregaDades&numHab=12"/>">Check-In</a></li>
+           <li><a tabindex="-1" href="#">Another action</a></li>
+           <li><a tabindex="-1" href="#">Something else here</a></li>
+           <li class="divider"></li>
+           <li><a tabindex="-1" href="#">Separated link</a></li>
 </ul>
         
                       
@@ -132,15 +148,15 @@
                                <script type="text/javascript" src="js/materialize.min.js"></script> 
                                <script type="text/javascript" src="js/utils/utilitats.js"></script>
                                <script type="text/javascript">
-                                    (function ($, window) {
-alert('hpla');
+(function ($, window) {
+
     $.fn.contextMenu = function (settings) {
-        alert('settings');
+       
         return this.each(function () {
                
             // Open context menu
             $(this).on("contextmenu", function (e) {
-                alert('contextmenu');
+               
                 // return native menu if pressing control
                 if (e.ctrlKey) return;
                 
@@ -191,11 +207,32 @@ alert('hpla');
 $("#taulaHabitacions td").contextMenu({
     menuSelector: "#contextMenu",
     menuSelected: function (invokedOn, selectedMenu) {
+//        switch(selectedMenu.text()){
+//            case 'Check-In':
+//                    var opcio = 'carregaDades';
+//                    var numHab = invokenOn.text();
+//                    $.ajax({
+//                      url:'dadesGestio',
+//                      type:'GET',
+//                      async:false,
+//                      dataType'json'
+//                    });
+//                    
+//                
+//                break;
+//        }
+       var num = invokedOn.text()
         var msg = "You selected the menu item '" + selectedMenu.text() +
             "' on the value '" + invokedOn.text() + "'";
         alert(msg);
     }
 });
+                                   $(document).ready(function(){
+                                        estatHabitacions();
+                                        $(".dropdown-button").dropdown();
+                                        
+                                   });
+                                  
                                 
                             
                                </script>
