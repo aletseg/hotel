@@ -8505,16 +8505,16 @@ if (Vel) {
     return {
 
       // The title label to use for the month nav buttons
-      labelMonthNext: 'Next month',
-      labelMonthPrev: 'Previous month',
+      labelMonthNext: 'Mes pròxim',
+      labelMonthPrev: 'Mes anterior',
 
       // The title label to use for the dropdown selectors
-      labelMonthSelect: 'Select a month',
-      labelYearSelect: 'Select a year',
+      labelMonthSelect: 'Seleccionar un mes',
+      labelYearSelect: 'Seleccionar un any',
 
       // Months and weekdays
       monthsFull: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-      monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      monthsShort: ['Gen', 'Febr', 'Març', 'Abr', 'Maig', 'Juny', 'Jul', 'Ag', 'Set', 'Oct', 'Nov', 'Des'],
       weekdaysFull: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
       weekdaysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
 
@@ -8530,7 +8530,7 @@ if (Vel) {
       closeOnSelect: false,
 
       // The format to show on the `input` element
-      format: 'd mmmm, yyyy',
+      format: 'yyyy-mm-dd',
 
       // Classes
       klass: {

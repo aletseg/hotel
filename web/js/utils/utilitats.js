@@ -27,3 +27,20 @@ function carregaDadesCheckIn(opcio,numHab){
        }
     });//Final ajax
 }
+
+function afegeixUrl(){
+    $("#Check-In").attr('href',function(){
+       return this.href+ invokedOn.text(); 
+    });
+}
+
+function canviaUrl(numHab){
+   $("#Check-In").on('click',function(){
+       var str = "dadesGestio?opcio=carregaDades&numHab=";
+        $("#Check-In").removeAttr('href');
+        $("#Check-In").addAttr('href', str+numHab);
+   });
+   
+//    $("#Check-In").removeAttr('href');
+//     $("#Check-In").addAttr('href')
+}

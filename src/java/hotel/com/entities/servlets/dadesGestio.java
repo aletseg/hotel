@@ -5,14 +5,19 @@
  */
 package hotel.com.entities.servlets;
 
+import hotel.com.entities.Clients;
 import hotel.com.entities.Empleats;
 import hotel.com.entities.Habitacions;
-import hotel.com.entities.JPACryptoConverter;
+
 import hotel.com.entities.Nacionalitats;
 import hotel.com.entities.TipoDocuments;
 import hotel.com.entities.TipoHabitacions;
 import java.io.IOException;
-import java.util.ArrayList;
+import static java.lang.Integer.parseInt;
+
+import java.text.SimpleDateFormat;
+
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -73,7 +78,7 @@ public class dadesGestio extends HttpServlet {
             }
             case "carregaDades": {
                 String num = request.getParameter("numHab");
-                int numHab = Integer.parseInt(num);
+                Integer numHab = Integer.parseInt(num);
                 Habitacions habitacio = tornaHabitacio(numHab);
                 List<Nacionalitats> llistaNac = tornaNacionalitats();
                 List<TipoDocuments> llistaDoc = tornaDocuments();
@@ -84,6 +89,54 @@ public class dadesGestio extends HttpServlet {
                 request.getRequestDispatcher(path).forward(request, response);
                 break;
             }
+            case "cancelar":{
+               List<TipoHabitacions> llistaHabitacions = tornaHabitacions();
+               request.setAttribute("llistaHabitacions", llistaHabitacions); 
+               path = "/dadesGenerals/home.jsp";
+               request.getRequestDispatcher(path).forward(request, response);
+            }
+            case "altaEstancia":{
+           
+                String nom = request.getParameter("nom");
+                String cognom = request.getParameter("cognom");
+                String congnom2 =request.getParameter("cognom2");
+                String tipoDocument = request.getParameter("tipoDocument");
+                TipoDocuments tDocument = new TipoDocuments(tipoDocument);
+                String numDocument = request.getParameter("numDocument");
+                String dataExpedicioDoc = request.getParameter("dataExpedicio");
+                String nacionalitat = request.getParameter("nacionalitat");
+                Nacionalitats nacio = new Nacionalitats();
+                nacio.setIdNacionalitat(parseInt(nacionalitat));
+                String dataNaixement = request.getParameter("dataNaixement");
+                String sexe = request.getParameter("sexe");
+                String observacions = request.getParameter("observacions");
+                Clients nou = null;
+                SimpleDateFormat plantillaData = new SimpleDateFormat("yyyy-MM-dd");
+                Date fetxaExpDoc = null;
+                Date fetxaNaixement = null;
+                try{
+                   fetxaExpDoc = plantillaData.parse(dataExpedicioDoc);
+                   fetxaNaixement = plantillaData.parse(dataNaixement);  
+                }catch(Exception e){
+                  System.out.println("Alguna de les dates te un format incorrecte");  
+                }
+                nou = new Clients(numDocument,fetxaExpDoc,nom,cognom,congnom2,fetxaNaixement,sexe,nacio,tDocument);
+                  
+
+//                nou.setNom(nom);
+//                nou.setCognom1(cognom);
+//                if(congnom2!=null){
+//                nou.setCognom2(congnom2);
+//                }
+//                nou.setTipoDocument(tDocument);
+//                nou.setNumDocument(numDocument);
+                
+                
+                insertar(nou);
+                
+                
+            }
+             
         }
     }
 
@@ -191,7 +244,7 @@ public class dadesGestio extends HttpServlet {
         try {
             emf = Persistence.createEntityManagerFactory("HotelPU");
             em = emf.createEntityManager();
-            TypedQuery<Nacionalitats> consulta = em.createQuery("select n from Nacionalitats n", Nacionalitats.class);
+            TypedQuery<Nacionalitats> consulta = em.createQuery("select n from Nacionalitats n order by n.nacionalitat asc", Nacionalitats.class);
             llistaNac = consulta.getResultList();
         } catch (Exception e) {
             System.err.println("Error: " + e);
@@ -221,10 +274,21 @@ public class dadesGestio extends HttpServlet {
         }
         return llistaDocs;
     }
-
     
+    // Insert d'objectes
+   public void insertar (Object object){
+       EntityManagerFactory emf = Persistence.createEntityManagerFactory("HotelPU");
+       EntityManager em = emf.createEntityManager();
+         em.getTransaction().begin();
+         em.persist(object);
+         em.getTransaction().commit();
+            em.close();
+        emf.close();
+   }
+
+   
     private void If(boolean b) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
     }
-
 }

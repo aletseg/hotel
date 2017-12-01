@@ -90,19 +90,41 @@ public class Clients implements Serializable {
     public Clients() {
     }
 
-    public Clients(Integer idClient) {
-        this.idClient = idClient;
-    }
+ 
 
-    public Clients(Integer idClient, String numDocument, Date dataExpedicioDoc, String nom, String cognom1, Date dataNaixement, String sexe) {
-        this.idClient = idClient;
+    public Clients(String numDocument, Date dataExpedicioDoc, String nom, String cognom1, String cognom2, Date dataNaixement, String sexe, Nacionalitats idNacio, TipoDocuments tipoDocument) {
         this.numDocument = numDocument;
         this.dataExpedicioDoc = dataExpedicioDoc;
         this.nom = nom;
         this.cognom1 = cognom1;
+        this.cognom2 = cognom2;
         this.dataNaixement = dataNaixement;
         this.sexe = sexe;
+        this.idNacio = idNacio;
+        this.tipoDocument = tipoDocument;
     }
+
+    public Clients(String numDocument, Date dataExpedicioDoc, String nom, String cognom1, String cognom2, Date dataNaixement, String sexe, String observacions, Nacionalitats idNacio, TipoDocuments tipoDocument) {
+        this.numDocument = numDocument;
+        this.dataExpedicioDoc = dataExpedicioDoc;
+        this.nom = nom;
+        this.cognom1 = cognom1;
+        this.cognom2 = cognom2;
+        this.dataNaixement = dataNaixement;
+        this.sexe = sexe;
+        this.observacions = observacions;
+        this.idNacio = idNacio;
+        this.tipoDocument = tipoDocument;
+    }
+    
+
+   
+
+    
+
+  
+    
+    
 
     public Integer getIdClient() {
         return idClient;

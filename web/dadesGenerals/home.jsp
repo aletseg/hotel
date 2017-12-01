@@ -26,7 +26,7 @@
               <li><a href="#!">Baixa empleat</a></li>
         </ul>
         <nav>
-        <div class="nav-wrapper purple darken-3">
+        <div class="nav-wrapper  deep-purple darken-4">
             <a href="#" clas="brand-logo">Hostal</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a href="#">Cambiar Usuari</a></li>
@@ -64,8 +64,8 @@
                                 <tr>
                              </c:if> 
                              <c:choose>
-                                 <c:when test="${habitacio.tipoHab.idTipo=='DB'}">
-                                     <td>
+                                 <c:when test="${habitacio.tipoHab.idTipo=='DB'}">                                     
+                                     <td id="${habitacio.numero}">
                                          <h2>${habitacio.numero} </h2></br>
                                          <p><i class="glyphicon glyphicon-bed" style="font-size: 34px"  name="${estat}"></i></p>
                                        
@@ -73,7 +73,7 @@
                                  </c:when>
                                 <c:when test="${habitacio.tipoHab.idTipo=='DS'}">
                                     
-                                        <td>
+                                        <td id="${habitacio.numero}">
                                            <h2>${habitacio.numero}</h2>
                                             <p><i class="fa fa-bed" style="font-size: 24px"  name="${estat}"></i></br>
                                             <i class="fa fa-bed" style="font-size: 24px"  name="${estat}"></i></p>
@@ -81,7 +81,7 @@
                                             </td>                                  
                                  </c:when>
                                  <c:otherwise>
-                                       <td>
+                                       <td id="${habitacio.numero}">
                                           
                                          <h2>${habitacio.numero} </h2></br>
                                          <p name="${estat}"><i class="fa fa-bed" style="font-size: 34px"  name="${estat}"></i></p>
@@ -93,8 +93,8 @@
                    </table> 
                        
         <ul id="contextMenu" class="dropdown-menu" role="menu" style="display:none" >
-           <li><a id="checkIn" tabindex="-1" href="<c:url value="dadesGestio?opcio=carregaDades&numHab=12"/>">Check-In</a></li>
-           <li><a tabindex="-1" href="#">Another action</a></li>
+            <li><a  id="Check-In" tabindex="-1" href="dadesGestio?opcio=carregaDades&numHab=">Check-In</a></li>
+           <li><a tabindex="-1" href="<c:url value="dadesGestio?opcio=carregaDades&numHab="/>" onclick="afegeixUrl()>Another action</a></li>
            <li><a tabindex="-1" href="#">Something else here</a></li>
            <li class="divider"></li>
            <li><a tabindex="-1" href="#">Separated link</a></li>
@@ -105,44 +105,7 @@
                         
                         
                 </section>        
-                        <section id="checkIn" class="checkIn indigo lighten-4 col s12">
-                    <div class="container">
-                        
-                        <div class="row" id="formAlta">
-                            <form action="<c:url value='dadesGestio'/>" method="post" id="" class="">
-<!--                                
-                                <div class="input-field col s6">
-                                <select name="tipoDocument">
-                                    <option value="" disabled selected>Tipo document*:</option>
-                                    <option value="">Proba</option>
-                                    <option>Proba3</option>
-                                    
-                                </select>
-                                </div>-->
-                                
-                                <div class="input-field col s12">
-    <select>
-      <option value="" disabled selected>Choose your option</option>
-      <option value="1">Option 1</option>
-      <option value="2">Option 2</option>
-      <option value="3">Option 3</option>
-    </select>
-    <label>Materialize Select</label>
-  </div>
 
-                                
-
-                                <label>Núm. Document*:</label><input type="text" name="numDocument"/>
-                                <label>Nom*:</label><input type="text" name="nom"/>
-                                <label>1er Llinatge*:</label><input type="text" name="cognom">
-                                <label>2º Llinatge:</label><input tyep="text" name="cognom2">
-                                <label></label><input type="" name=""/>
-                                    
-                            </form>
-                            
-                        </div>
-                    </div>
-          </section>
                         
                                 <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
                                <script type="text/javascript" src="js/materialize.min.js"></script> 
@@ -205,35 +168,46 @@
 })(jQuery, window);
 
 $("#taulaHabitacions td").contextMenu({
-    menuSelector: "#contextMenu",
-    menuSelected: function (invokedOn, selectedMenu) {
-//        switch(selectedMenu.text()){
-//            case 'Check-In':
-//                    var opcio = 'carregaDades';
-//                    var numHab = invokenOn.text();
-//                    $.ajax({
-//                      url:'dadesGestio',
-//                      type:'GET',
-//                      async:false,
-//                      dataType'json'
-//                    });
-//                    
-//                
-//                break;
-//        }
+        menuSelector: "#contextMenu",
+        menuSelected: function (invokedOn, selectedMenu) {
+      
        var num = invokedOn.text()
         var msg = "You selected the menu item '" + selectedMenu.text() +
             "' on the value '" + invokedOn.text() + "'";
         alert(msg);
+         var opcioMenu = selectedMenu.text();
+                  
+         switch(opcioMenu) {
+             case 'Check-In':
+                 var numHab = invokedOn.text();
+                alert('nhab:' + numHab);   
+             
+                
+                    $("#Check-In").attr('href',function(){
+                        return this.href+ invokedOn.text(); 
+                     }); 
+                     
+                   //carregaDadesCheckIn(opcio,numHab);
+                    
+                
+                break;
+         }
+            
+   
+            
+        
     }
-});
+    
+    });
                                    $(document).ready(function(){
                                         estatHabitacions();
                                         $(".dropdown-button").dropdown();
                                         
                                    });
                                   
-                                
+                    $("#obrirForm").attr('href',function(){
+       return this.href+ invokedOn.text(); 
+    });            
                             
                                </script>
                                
