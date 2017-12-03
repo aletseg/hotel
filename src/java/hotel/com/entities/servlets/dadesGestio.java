@@ -7,6 +7,8 @@ package hotel.com.entities.servlets;
 
 import hotel.com.entities.Clients;
 import hotel.com.entities.Empleats;
+import hotel.com.entities.Estancies;
+import hotel.com.entities.EstanciesHostes;
 import hotel.com.entities.Habitacions;
 
 import hotel.com.entities.Nacionalitats;
@@ -110,7 +112,7 @@ public class dadesGestio extends HttpServlet {
                 String dataNaixement = request.getParameter("dataNaixement");
                 String sexe = request.getParameter("sexe");
                 String observacions = request.getParameter("observacions");
-                Clients nou = null;
+                Clients nouClient = null;
                 SimpleDateFormat plantillaData = new SimpleDateFormat("yyyy-MM-dd");
                 Date fetxaExpDoc = null;
                 Date fetxaNaixement = null;
@@ -120,22 +122,37 @@ public class dadesGestio extends HttpServlet {
                 }catch(Exception e){
                   System.out.println("Alguna de les dates te un format incorrecte");  
                 }
-                nou = new Clients(numDocument,fetxaExpDoc,nom,cognom,congnom2,fetxaNaixement,sexe,nacio,tDocument);
-                  
+                nouClient = new Clients(numDocument,fetxaExpDoc,nom,cognom,congnom2,fetxaNaixement,sexe,nacio,tDocument);
+                int numHab = parseInt(request.getParameter("numHab"));
+                Habitacions numHabitacio = new Habitacions(numHab);
+                Date data = new Date();
+                Estancies estancia = new Estancies(data,numHabitacio);
 
-//                nou.setNom(nom);
-//                nou.setCognom1(cognom);
-//                if(congnom2!=null){
-//                nou.setCognom2(congnom2);
-//                }
-//                nou.setTipoDocument(tDocument);
-//                nou.setNumDocument(numDocument);
+                Clients clientIns = insertarTornaClient(nouClient);
+                Estancies EstanciaIns = insertarTornaEstancia(estancia);
                 
                 
-                insertar(nou);
+              //  Clients clientCercat = cercaClient(numDocument);
+            //  insertar(estancia);
+             //   Estancies trobaEstancia = cercaEstancia(numHabitacio, data);
+                if(clientIns != null && EstanciaIns != null ){
+                    EstanciesHostes estanciaHoste = new EstanciesHostes(data, EstanciaIns, clientIns);
+                    EstanciesHostes estanciaHosteNova = insertarTornaEstanciaHostes(estanciaHoste);
+                     if(estanciaHosteNova.getIdEstanciaHoste() != null){
+                       canviaEstatHabitacio(numHabitacio);  
+                    }
+                }
+                missatge = "S'ha insertat correctament el client";
+                request.setAttribute("client",clientIns);
+                request.setAttribute("missatge", missatge);
+                List<TipoHabitacions> llistaHabitacions = tornaHabitacions();
+                request.setAttribute("llistaHabitacions", llistaHabitacions);
+                path= "/dadesGenerals/home.jsp";
+                request.getRequestDispatcher(path).forward(request, response);
                 
                 
-            }
+                
+            }//Final alta estancia
              
         }
     }
@@ -232,7 +249,8 @@ public class dadesGestio extends HttpServlet {
         } catch (Exception e) {
             System.err.println("Error: " + e);
         } finally {
-
+            em.close();
+            emf.close();
         }
         return habitacio;
     }
@@ -282,9 +300,108 @@ public class dadesGestio extends HttpServlet {
          em.getTransaction().begin();
          em.persist(object);
          em.getTransaction().commit();
-            em.close();
-        emf.close();
+         em.close();
+         emf.close();    
    }
+   
+   public Estancies insertarTornaEstancia(Estancies estancia){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("HotelPU");
+        EntityManager em = emf.createEntityManager();
+         em.getTransaction().begin();
+         em.persist(estancia);
+         em.flush();
+         em.getTransaction().commit();         
+         em.close();
+         emf.close();
+         return estancia;
+   }
+   
+    public EstanciesHostes insertarTornaEstanciaHostes(EstanciesHostes estanciaHoste){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("HotelPU");
+        EntityManager em = emf.createEntityManager();
+         em.getTransaction().begin();
+         em.persist(estanciaHoste);
+         em.flush();
+         em.getTransaction().commit();
+         em.close();
+         emf.close();
+         return estanciaHoste;
+   }
+   
+   public Clients insertarTornaClient(Clients client){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("HotelPU");
+        EntityManager em = emf.createEntityManager();
+         em.getTransaction().begin();
+         em.persist(client);
+         em.flush();
+         em.getTransaction().commit();
+         em.close();
+         emf.close();
+         return client;
+   }
+   
+   
+   // cercar Client per numDocument
+   private Clients cercaClient(String numdocument){
+        TypedQuery<Clients> a = null;
+        EntityManagerFactory emf = null;
+        EntityManager em = null;
+        Clients client = null;
+        try {
+            emf = Persistence.createEntityManagerFactory("HotelPU");
+            em = emf.createEntityManager();
+            a = em.createQuery("select c from Clients c where c.numDocument=:pNumDocument", Clients.class);
+            a.setParameter("pNumDocument", numdocument);
+            client = a.getSingleResult();
+
+        } catch (Exception e) {
+            System.err.println("Error: " + e);
+        } finally {
+            em.close();
+            emf.close();
+        }
+       return client;
+   }
+   
+    private Estancies cercaEstancia(Habitacions numHabitacio, Date data){
+        TypedQuery<Estancies> a = null;
+        EntityManagerFactory emf = null;
+        EntityManager em = null;
+        Estancies estancia = null;
+        try {
+            emf = Persistence.createEntityManagerFactory("HotelPU");
+            em = emf.createEntityManager();
+            a = em.createQuery("select e from Estancies e where e.dataEntrada=:pDataEntrada  and e.numHabitacio =:pNumHabitacio", Estancies.class);
+            a.setParameter("pNumHabitacio", numHabitacio);
+            a.setParameter("pDataEntrada",data);
+            estancia = a.getSingleResult();
+
+        } catch (Exception e) {
+            System.err.println("Error: " + e);
+        } finally {
+            em.close();
+            emf.close();
+        }
+       return estancia;
+   }
+    
+   // PER FER UN UPDATE
+      //  Autor canviar = em.find(Autor.class,6563);
+//        canviar.setNomAut("Reus, Joan Manuel");
+//        em.getTransaction().begin();
+//        em.merge(canviar);
+//        em.getTransaction().commit();
+    public void canviaEstatHabitacio(Habitacions habitacio){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("HotelPU");
+        EntityManager em = emf.createEntityManager();
+        Habitacions estatHabitacio = em.find(Habitacions.class, habitacio.getNumero());
+        estatHabitacio.setEstat("Ocupat");
+        em.getTransaction().begin();
+        em.merge(estatHabitacio);
+        em.getTransaction().commit();
+        em.close();
+        emf.close();
+    }
 
    
     private void If(boolean b) {

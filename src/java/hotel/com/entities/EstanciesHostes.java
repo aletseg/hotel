@@ -68,6 +68,13 @@ public class EstanciesHostes implements Serializable {
         this.dataEntrada = dataEntrada;
     }
 
+    public EstanciesHostes(Date dataEntrada, Estancies estanciaId, Clients clientId) {
+        this.dataEntrada = dataEntrada;
+        this.estanciaId = estanciaId;
+        this.clientId = clientId;
+    }
+    
+
     public Integer getIdEstanciaHoste() {
         return idEstanciaHoste;
     }

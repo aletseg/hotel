@@ -39,6 +39,9 @@
             <h1>Recepció</h1>
           <h5>Empleat: ${empleat.nom}</h5>
           </div>
+          <c:if test="${missatge != ''}">
+              alert(${missatge});
+          </c:if>
         <section class="col s12">
         <div class="container z-depth-5" id="habitacions">
             <h2>Habitacions</h2>
@@ -169,9 +172,9 @@
 
 $("#taulaHabitacions td").contextMenu({
         menuSelector: "#contextMenu",
-        menuSelected: function (invokedOn, selectedMenu) {
-      
-       var num = invokedOn.text()
+        menuSelected: function (invokedOn ,selectedMenu) {
+       
+       var num = invokedOn.text();
         var msg = "You selected the menu item '" + selectedMenu.text() +
             "' on the value '" + invokedOn.text() + "'";
         alert(msg);
@@ -202,12 +205,12 @@ $("#taulaHabitacions td").contextMenu({
                                    $(document).ready(function(){
                                         estatHabitacions();
                                         $(".dropdown-button").dropdown();
-                                        
                                    });
                                   
-                    $("#obrirForm").attr('href',function(){
-       return this.href+ invokedOn.text(); 
-    });            
+                                 $("#obrirForm").attr('href',function(){
+                                     return this.href+ invokedOn.text(); 
+                                 });  
+                                 
                             
                                </script>
                                

@@ -74,6 +74,13 @@ public class Estancies implements Serializable {
         this.dataEntrada = dataEntrada;
     }
 
+    public Estancies(Date dataEntrada, Habitacions numHabitacio) {
+        this.dataEntrada = dataEntrada;
+        this.numHabitacio = numHabitacio;
+    }
+    
+    
+
     public Integer getIdEstancia() {
         return idEstancia;
     }
