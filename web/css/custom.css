@@ -33,3 +33,7 @@ margeAll{
     margin: 3% !important;
     padding: 1% !important;
 }
+
+.bottomMargin{
+    margin-bottom: 5%;
+}

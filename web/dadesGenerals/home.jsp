@@ -19,30 +19,31 @@
         <title>Home</title>
     </head>
     <body>
-        <!--Dropdown estructure -->
-        <ul id="dropdow1" class="dropdown-content">
-            <li><a href="#!">Cambiar Preus</a></li>
-             <li><a href="#!">Alta empleat</a></li>
-              <li><a href="#!">Baixa empleat</a></li>
-        </ul>
+        
+       <!-- Dropdown Structure -->
+<ul id="dropdown1" class="dropdown-content">
+  <li><a href="#!">Afegir Empleat</a></li>
+  <li><a href="#!">Eliminar Empleat</a></li>
+  <li class="divider"></li>
+  <li><a href="#!">Canviar Preus Habitacions</a></li>
+</ul>
         <nav>
-        <div class="nav-wrapper  deep-purple darken-4 z-depth-5">
-            <a href="#" clas="brand-logo">Hostal</a>
+        <div class="nav-wrapper  deep-purple darken-4 z-depth-5 ">
+            <h1 class="brand-logo marge">Recepció</h1>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="#">Cambiar Usuari</a></li>
-                <li><a href="#">Crear fitxa Policia</a></li>
-                 <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Dropdown<i class="material-icons right">arrow_drop_down</i></a></li>
+                <li><a href="dadesGestio?opcio=canviarUsuari" class="lletragran">Cambiar Usuari</a></li>
+                <li><a href="#" class="lletragran">Crear fitxa Policia</a></li>
+                <c:if test="${empleat.tipo=='administrador'}">
+                 <li><a class="dropdown-button lletragran" href="#!" data-activates="dropdown1">Administrador<i class="material-icons right">arrow_drop_down</i></a></li>
+                 </c:if>
             </ul>
         </div>
         </nav> 
-        <div class="container">
-            <h1>Recepció</h1>
-          <h5>Empleat: ${empleat.nom}</h5>
-          </div>
+      
         <section class="col s12">
         <div class="container z-depth-5" id="habitacions">
             <h2>Habitacions</h2>
-            <table class="centered bordered" id="taulaHabitacions">
+            <table class="centered bordered bottomMargin" id="taulaHabitacions">
                 <tr>
                     <c:set var="numPis" scope="session" value="1"/>
                         <c:forEach var="habitacio" items="${llistaHabitacions}" >
@@ -91,13 +92,15 @@
                              </c:choose>                             
                                 </c:forEach>
                    </table> 
-                       
+                     
         <ul id="contextMenu" class="dropdown-menu" role="menu" style="display:none" >
             <li><a  id="Check-In" tabindex="-1" href="dadesGestio?opcio=carregaDades&numHab=">Check-In</a></li>
            <li><a id="Check-Out" tabindex="-1" href="dadesGestio?opcio=carregaEstanciaBaixa&numHab=">Check-Out</a></li>
            <li><a id="mostraFitxa" tabindex="-1" href="dadesGestio?opcio=mostraFitxa&numHab=">Veure Fitxa</a></li>
-           <li class="divider"></li>
-           <li><a tabindex="-1" href="#">Separated link</a></li>
+            <li class="divider"></li>
+           <li><a tabindex="-1" href="#">Habitació No Disponible</a></li>
+          
+           
 </ul>
         
                       
@@ -105,7 +108,9 @@
                         
                         
                 </section>        
-
+   <div class="container">
+          <h5>Empleat: ${empleat.nom}</h5>
+          </div> 
                         
                                 <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
                                <script type="text/javascript" src="js/materialize.min.js"></script> 
@@ -174,20 +179,23 @@ $("#taulaHabitacions td").contextMenu({
        var num = invokedOn.text();
         var msg = "You selected the menu item '" + selectedMenu.text() +
             "' on the value '" + invokedOn.text() + "'";
-        alert(msg);
+       // alert(msg);
          var opcioMenu = selectedMenu.text();
-                  
+          if(invokedOn.text()===""){
+              alert("Error al seleccionar l'habitació! \n - Has de clicar sobre el nombre d'habitació" ); 
+           
+          }        
          switch(opcioMenu) {
              case 'Check-In':
                  var numHab = invokedOn.text();
-                alert('nhab:' + numHab);   
+               // alert('nhab:' + numHab);   
                     $("#Check-In").attr('href',function(){
                         return this.href+ invokedOn.text(); 
                      }); 
                 break;
             case 'Check-Out':
                 $('#Check-Out').attr('href',function(){
-                    return this.href + invokedOn.text(); 
+                    return this.href + invokedOn.text();  
                 });
                 break;
             case 'Veure Fitxa':

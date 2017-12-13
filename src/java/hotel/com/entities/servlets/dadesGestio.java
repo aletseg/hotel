@@ -81,6 +81,12 @@ public class dadesGestio extends HttpServlet {
             }
             case "carregaDades": {
                 String num = request.getParameter("numHab");
+                if(num == ""){
+                    request.setAttribute("Error", "Error al clicar la habitació");
+                    List<TipoHabitacions> llistaHabitacions = tornaHabitacions();
+                    request.setAttribute("llistaHabitacions", llistaHabitacions); 
+                    path = "/dadesGenerals/home.jsp";
+                }else{
                 Integer numHab = Integer.parseInt(num);
                 Habitacions habitacio = tornaHabitacio(numHab);
                 List<Nacionalitats> llistaNac = tornaNacionalitats();
@@ -89,6 +95,7 @@ public class dadesGestio extends HttpServlet {
                 request.setAttribute("llistaNac", llistaNac);
                 request.setAttribute("llistaDoc", llistaDoc);
                 path= "/dadesGenerals/formCheckIn.jsp";
+                }
                 request.getRequestDispatcher(path).forward(request, response);
                 break;
             }
@@ -154,7 +161,14 @@ public class dadesGestio extends HttpServlet {
             }//Final alta estancia
             
             case "carregaEstanciaBaixa":{
-             String num = request.getParameter("numHab");
+                String num = request.getParameter("numHab");
+                if(num == ""){
+                    request.setAttribute("Error", "Error al clicar la habitació");
+                    List<TipoHabitacions> llistaHabitacions = tornaHabitacions();
+                    request.setAttribute("llistaHabitacions", llistaHabitacions); 
+                    path = "/dadesGenerals/home.jsp";
+                }else{
+             
              Integer numHab = Integer.parseInt(num);
              Habitacions numHabitacioCercat = tornaHabitacio(numHab); 
              Estancies numEstanciaHab = tornaEstancia(numHabitacioCercat);
@@ -166,12 +180,19 @@ public class dadesGestio extends HttpServlet {
              List<TipoHabitacions> llistaHabitacions = tornaHabitacions();
              request.setAttribute("llistaHabitacions", llistaHabitacions);
              path= "/dadesGenerals/home.jsp";
+                }
              request.getRequestDispatcher(path).forward(request, response); 
              break;   
             }// Final CarregaEstancia
             
             case "mostraFitxa":{
               String num = request.getParameter("numHab");
+               if(num == ""){
+                    request.setAttribute("Error", "Error al clicar la habitació");
+                    List<TipoHabitacions> llistaHabitacions = tornaHabitacions();
+                    request.setAttribute("llistaHabitacions", llistaHabitacions); 
+                    path = "/dadesGenerals/home.jsp";
+                }else{
              Integer numHab = Integer.parseInt(num);
              Habitacions numHabitacioCercat = tornaHabitacio(numHab); 
              Estancies numEstanciaHab = tornaEstancia(numHabitacioCercat);
@@ -190,9 +211,17 @@ public class dadesGestio extends HttpServlet {
                path = "/dadesGenerals/home.jsp";
                
              }
+               }
              request.getRequestDispatcher(path).forward(request, response); 
              break;   
               
+            }
+            
+            case "canviarUsuari":{
+             //  request.getSession().removeAttribute("empleat"); 
+              request.getSession().removeAttribute("empleat");
+              response.sendRedirect("index.html");
+              break;
             }
         }
     }
