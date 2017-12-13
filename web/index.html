@@ -18,23 +18,23 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>    
-      <div class="nav-wrapper deep-purple darken-4 z-depth-5 valign-wrapper">
+      <div class="nav-wrapper deep-purple darken-4 z-depth-4 valign-wrapper">
           <h1 class="deep-purple-text text-lighten-4 marge">Hostal Sorrento</h1>
       </div>
       <section>
-        <div class="fondo">
+        <div >
             <div class="container">
                 <div class="row s12 m6">
-                    <div class="card medium z-depth-5">
+                    <div class="card medium z-depth-4">
                         <div class="card-content">
                            
-                            <span class="card-title center indigo-text">Login</span>
+                            <span class="card-title center indigo-text margeAll"><b>Login</b></span>
                            
                                 <form id="login" method="post" action="dadesGestio">
                                  <input type="hidden" value="login" name="opcio"/>
                                  <label class="indigo-text lletragran"><b>Usuari:</b></label>
                                  <input type="text" id="usuari" name="usuari"/>
-                                 <h5><label class="indigo-text lletragran">Contrasenya:</label></h5>
+                                 <h5><label class="indigo-text lletragran"><b>Contrasenya:</b></label></h5>
                                  <input type="password" name="contrasenya" />
                                  <button type="submit" class="btn pink darken-3 z-depth-2 right">Enviar</button>
                              </form>
@@ -44,6 +44,7 @@ and open the template in the editor.
             </div>
         </div>
           </section>
+    
                <!--Import jQuery before materialize.js-->
       <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
       <script type="text/javascript" src="js/materialize.min.js"></script>

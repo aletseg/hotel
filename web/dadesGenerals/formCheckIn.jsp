@@ -14,17 +14,17 @@
 <!--       <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen"/> -->
           <link type="text/css" rel="stylesheet" href="css/custom.css"/>
         <link type="text/css" rel="stylesheet" href="css/w3.css"/>
-     
+        
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Formulari Alta Client</title>
     </head>
     <body>
         <div class="w3-container w3-center ">
-             <h1>Formulari Client</h1>
+             <h1>Check-In</h1>
         </div>
                 <section>
                     <div class="w3-container">
-                    <div class="w3-row">
+                    <div class="w3-row-padding">
                         <h2>Dades Habitació</h2>
                          <div class="w3-quarter"><b>Habitació: </b>${habitacio.numero}</div> 
                         <div class="w3-quarter"><b>Descripció: </b>${habitacio.tipoHab.descripcio}</div> 
@@ -36,45 +36,30 @@
                      </div>       
                 </section> 
                  <section>
+                      <div class="w3-content">
                    <form action="<c:url value='dadesGestio'/>" method="post" id="altaClient" class="w3-container ">
                       <input type="hidden" name="opcio" value="altaEstancia"/>
                       <input type="hidden" name="numHab" value="${habitacio.numero}"/>
 
                         <div class="w3-row">
-                                <h2>Dades Client</h2>
+                                <h2>Formulari Alta Client</h2>
                            </div> 
-                      <div class="w3-container">
-                           <div class="w3-row">
-                                <div class="w3-third">
-                                    <select required name="tipoDocument" class="w3-select" id="tipoDoc">
-                                        <option value="" disabled selected>Tipo Document*:</option>
-                                        <c:forEach var="document" items="${llistaDoc}">
-                                            <option value="${document.idDocument}">${document.document}</option>
-                                        </c:forEach>
-                                    </select>
+                     <div class="w3-row-padding w3-section">
+                                <div class="w3-half">
+<!--                                     <label>Nom*:</label>-->
+                                <input type="text" name="nom" class="w3-input" id="nom" required placeholder="Nom*"/>
                                 </div>
-                                <div class="w3-third">
-                                    <label>Núm. Document*:</label>
-                                    <input type="text" name="numDocument" required class="w3-input" id="numDocument"/>
+                                <div class="w3-half">
+<!--                                    <label>1er Llinatge*:</label>-->
+                                    <input type="text" name="cognom" class="w3-input" id="cognom" required placeholder="Llinatge*">
                                 </div>
-                                <div class="w3-third">
-                                    <label>Data Expedicio*:</label>
-                                    <input type="date" name="dataExpedicio" required class="w3-input"/>
+                                 </div>
+                       <div class="w3-row-padding w3-section paddingALL">
+                                <div class="w3-half">
+<!--                                  <label>2º Llinatge:</label>-->
+                                     <input tyep="text" name="cognom2" class="w3-input" id="congnom2" placeholder="2ºLlinatge">
                                 </div>
-                   </div>
-                  </div>
-                                <div class="w3-third">
-                                     <label>Nom*:</label>
-                                     <input type="text" name="nom" class="w3-input" id="nom" required/>
-                                </div>
-                                <div class="w3-third">
-                                    <label>1er Llinatge*:</label>
-                                    <input type="text" name="cognom" class="w3-input" id="cognom" required></div>
-                                <div class="w3-third">
-                                     <label>2º Llinatge:</label>
-                                     <input tyep="text" name="cognom2" class="w3-input" id="congnom2">
-                                </div>
-                                <div class="w3-third">
+                                 <div class="w3-half">
                                     <select required name="nacionalitat" class="w3-select" id="nacionalitat">
                                         <option value="" disabled selected>Nacionalitat*:</option>
                                         <c:forEach var="llista" items="${llistaNac}">
@@ -82,30 +67,62 @@
                                         </c:forEach>
                                     </select>
                                 </div>
-                                <div class="w3-third">
+                       </div>
+                      <div class="w3-row-padding w3-section paddingALL">
+                          <div class="w3-half">
                                     <label>Data Naixement*:</label>
                                     <input type="date" name="dataNaixement" class="w3-input" required id="dataNaixement"/>
-                                </div>
-                              
-                                         <div class="w3-third">
+                          </div> 
+                            <div class="w3-half">
                                         <h6>Sexe:</h6>
                                         <input type="radio" name="sexe" value="M" id="home"/>
-                                        <label for="home">Home</label>
+                                        <label for="home">Home</label>&nbsp;&nbsp;
                                         <input type="radio" name="sexe" value="F" id="dona"/> 
-                                        <label for="dona">Dona</label>            
+                                        <label for="dona">Dona</label>
                                          </div>
-                                         <div class="w3-third">
+                      </div>
+                      
+                           <div class="w3-row-padding w3-section paddingALL">
+                                <div class="w3-half">
+                                    <select required name="tipoDocument" class="w3-select" id="tipoDoc">
+                                        <option value="" disabled selected>Tipo Document*:</option>
+                                        <c:forEach var="document" items="${llistaDoc}">
+                                            <option value="${document.idDocument}">${document.document}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                                <div class="w3-half">
+<!--                                    <label>Núm. Document*:</label>-->
+                                <input type="text" name="numDocument" required class="w3-input" id="numDocument" placeholder="Núm. de Document*"/>
+                                </div>
+                           </div>
+                      <div class="w3-row-padding w3-section paddingALL">
+                                <div class="w3-half">
+                                    <label> Data Expedicio Document*:</label>
+                                <input type="date" name="dataExpedicio" required class="w3-input" placeholder="Data Expedicio Document*"/>
+                                </div>
+                               
+                                
+                      </div>
+                            
+                                
+                  
+                                
+                               
+                              
+                                       
+                                         <div class="w3-half">
                                             <label for="observacions">Observacions:</label>
                                             <textarea id="observacions" class="materialize-textarea" name="observacions"></textarea>
                                           
                                           </div>
-                                    <div class="w3-third">
+                                    <div class="w3-half">
                                         <a class="w3-btn w3-teal" href="<c:url value="dadesGestio?opcio=cancelar"/>">Cancelar</a>
                                         <button class="w3-btn w3-teal" type="submit">Enviar</a>
                                     </div>
                                     
                             </form>
-                            
+                        </div>    
 
                  
 

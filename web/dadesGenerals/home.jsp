@@ -41,8 +41,8 @@
         </nav> 
       
         <section class="col s12">
-        <div class="container z-depth-5" id="habitacions">
-            <h2>Habitacions</h2>
+        <div class="container z-depth-5 rodo" id="habitacions">
+            <h1 class="center indigo-text">Habitacions</h1>
             <table class="centered bordered bottomMargin" id="taulaHabitacions">
                 <tr>
                     <c:set var="numPis" scope="session" value="1"/>
@@ -98,19 +98,16 @@
            <li><a id="Check-Out" tabindex="-1" href="dadesGestio?opcio=carregaEstanciaBaixa&numHab=">Check-Out</a></li>
            <li><a id="mostraFitxa" tabindex="-1" href="dadesGestio?opcio=mostraFitxa&numHab=">Veure Fitxa</a></li>
             <li class="divider"></li>
-           <li><a tabindex="-1" href="#">Habitació No Disponible</a></li>
-          
-           
-</ul>
-        
-                      
-                </div>
-                        
-                        
-                </section>        
-   <div class="container">
+           <li><a tabindex="-1" href="#">Habitació No Disponible</a></li>     
+        </ul>   
+      </div>
+            
+          </section>        
+<!--   <footer class="page-footer deep-purple darken-4">
+       <div class="container">
           <h5>Empleat: ${empleat.nom}</h5>
-          </div> 
+       </div>
+    </footer> -->
                         
                                 <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
                                <script type="text/javascript" src="js/materialize.min.js"></script> 

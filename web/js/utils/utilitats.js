@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 function estatHabitacions(){
-    $("i[name='lliure']").addClass("light-green-text accent-4") ; 
+    $("i[name='lliure']").addClass("light-green-text accent-4") ;
     $("i[name='ocupat']").addClass("red-text text-accent-4") ;
     $("i[name='noDisponible'").addClass("grey-text text-lighten-1");
 }
