@@ -20,3 +20,16 @@ section{
 #color{
     background: #311b92;
 }
+
+.lletragran{
+    font-size: 16px !important;
+}
+
+.marge{
+    margin-left: 5%;
+}
+
+margeAll{
+    margin: 3% !important;
+    padding: 1% !important;
+}

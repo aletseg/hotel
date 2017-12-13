@@ -26,7 +26,7 @@
               <li><a href="#!">Baixa empleat</a></li>
         </ul>
         <nav>
-        <div class="nav-wrapper  deep-purple darken-4">
+        <div class="nav-wrapper  deep-purple darken-4 z-depth-5">
             <a href="#" clas="brand-logo">Hostal</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a href="#">Cambiar Usuari</a></li>
@@ -39,9 +39,6 @@
             <h1>Recepció</h1>
           <h5>Empleat: ${empleat.nom}</h5>
           </div>
-          <c:if test="${missatge != ''}">
-              alert(${missatge});
-          </c:if>
         <section class="col s12">
         <div class="container z-depth-5" id="habitacions">
             <h2>Habitacions</h2>
@@ -70,7 +67,7 @@
                                  <c:when test="${habitacio.tipoHab.idTipo=='DB'}">                                     
                                      <td id="${habitacio.numero}">
                                          <h2>${habitacio.numero} </h2></br>
-                                         <p><i class="glyphicon glyphicon-bed" style="font-size: 34px"  name="${estat}"></i></p>
+                                         <p name="${habitacio.numero}"><i class="glyphicon glyphicon-bed" style="font-size: 34px"  name="${estat}"></i></p>
                                        
                                      </td>
                                  </c:when>
@@ -97,8 +94,8 @@
                        
         <ul id="contextMenu" class="dropdown-menu" role="menu" style="display:none" >
             <li><a  id="Check-In" tabindex="-1" href="dadesGestio?opcio=carregaDades&numHab=">Check-In</a></li>
-           <li><a tabindex="-1" href="<c:url value="dadesGestio?opcio=carregaDades&numHab="/>" onclick="afegeixUrl()>Another action</a></li>
-           <li><a tabindex="-1" href="#">Something else here</a></li>
+           <li><a id="Check-Out" tabindex="-1" href="dadesGestio?opcio=carregaEstanciaBaixa&numHab=">Check-Out</a></li>
+           <li><a id="mostraFitxa" tabindex="-1" href="dadesGestio?opcio=mostraFitxa&numHab=">Veure Fitxa</a></li>
            <li class="divider"></li>
            <li><a tabindex="-1" href="#">Separated link</a></li>
 </ul>
@@ -184,16 +181,19 @@ $("#taulaHabitacions td").contextMenu({
              case 'Check-In':
                  var numHab = invokedOn.text();
                 alert('nhab:' + numHab);   
-             
-                
                     $("#Check-In").attr('href',function(){
                         return this.href+ invokedOn.text(); 
                      }); 
-                     
-                   //carregaDadesCheckIn(opcio,numHab);
-                    
-                
                 break;
+            case 'Check-Out':
+                $('#Check-Out').attr('href',function(){
+                    return this.href + invokedOn.text(); 
+                });
+                break;
+            case 'Veure Fitxa':
+                $('#mostraFitxa').attr('href',function(){
+                     return this.href + invokedOn.text();
+                });
          }
             
    
@@ -205,11 +205,10 @@ $("#taulaHabitacions td").contextMenu({
                                    $(document).ready(function(){
                                         estatHabitacions();
                                         $(".dropdown-button").dropdown();
-                                   });
+                                          
+                                   });// Final document ready
                                   
-                                 $("#obrirForm").attr('href',function(){
-                                     return this.href+ invokedOn.text(); 
-                                 });  
+//                                
                                  
                             
                                </script>

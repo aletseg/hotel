@@ -26,6 +26,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaQuery;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -139,7 +140,7 @@ public class dadesGestio extends HttpServlet {
                     EstanciesHostes estanciaHoste = new EstanciesHostes(data, EstanciaIns, clientIns);
                     EstanciesHostes estanciaHosteNova = insertarTornaEstanciaHostes(estanciaHoste);
                      if(estanciaHosteNova.getIdEstanciaHoste() != null){
-                       canviaEstatHabitacio(numHabitacio);  
+                       canviaEstatHabitacio(numHabitacio, "Ocupat");  
                     }
                 }
                 missatge = "S'ha insertat correctament el client";
@@ -149,11 +150,50 @@ public class dadesGestio extends HttpServlet {
                 request.setAttribute("llistaHabitacions", llistaHabitacions);
                 path= "/dadesGenerals/home.jsp";
                 request.getRequestDispatcher(path).forward(request, response);
-                
-                
-                
+                break;
             }//Final alta estancia
-             
+            
+            case "carregaEstanciaBaixa":{
+             String num = request.getParameter("numHab");
+             Integer numHab = Integer.parseInt(num);
+             Habitacions numHabitacioCercat = tornaHabitacio(numHab); 
+             Estancies numEstanciaHab = tornaEstancia(numHabitacioCercat);
+             EstanciesHostes estanciaHoste = tornaEstanciaHoste(numEstanciaHab);
+             Date dataBaixa = new Date();
+             baixaEstanciaHoste(estanciaHoste,dataBaixa);
+             baixaEstancia(numEstanciaHab,dataBaixa);
+             canviaEstatHabitacio(numHabitacioCercat,"Lliure");
+             List<TipoHabitacions> llistaHabitacions = tornaHabitacions();
+             request.setAttribute("llistaHabitacions", llistaHabitacions);
+             path= "/dadesGenerals/home.jsp";
+             request.getRequestDispatcher(path).forward(request, response); 
+             break;   
+            }// Final CarregaEstancia
+            
+            case "mostraFitxa":{
+              String num = request.getParameter("numHab");
+             Integer numHab = Integer.parseInt(num);
+             Habitacions numHabitacioCercat = tornaHabitacio(numHab); 
+             Estancies numEstanciaHab = tornaEstancia(numHabitacioCercat);
+             EstanciesHostes estanciaHoste = tornaEstanciaHoste(numEstanciaHab);
+             Clients clientBaixa = tornaClientEstancia(estanciaHoste);
+             if(numEstanciaHab != null && estanciaHoste != null && clientBaixa != null){
+                 path = "dadesGenerals/dadesClient.jsp";
+                 request.setAttribute("habitacio", numHabitacioCercat);
+                 request.setAttribute("estanciaHoste", estanciaHoste);
+                 request.setAttribute("client", clientBaixa);
+                 request.setAttribute("titol", "Baixa Client"); 
+             }else{
+                List<TipoHabitacions> llistaHabitacions = tornaHabitacions();
+               request.setAttribute("llistaHabitacions", llistaHabitacions);
+               request.setAttribute("missatge","Aquesta habitació no es pot donar de baixa, no té cap client");
+               path = "/dadesGenerals/home.jsp";
+               
+             }
+             request.getRequestDispatcher(path).forward(request, response); 
+             break;   
+              
+            }
         }
     }
 
@@ -254,7 +294,7 @@ public class dadesGestio extends HttpServlet {
         }
         return habitacio;
     }
-
+    // Torna el Llistat de nacionalitats
     private List<Nacionalitats> tornaNacionalitats() {
         List<Nacionalitats> llistaNac = null;
         EntityManagerFactory emf = null;
@@ -315,7 +355,7 @@ public class dadesGestio extends HttpServlet {
          emf.close();
          return estancia;
    }
-   
+   // Inserta En estancies hosta i torna la tuppla creada.
     public EstanciesHostes insertarTornaEstanciaHostes(EstanciesHostes estanciaHoste){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("HotelPU");
         EntityManager em = emf.createEntityManager();
@@ -385,22 +425,118 @@ public class dadesGestio extends HttpServlet {
        return estancia;
    }
     
-   // PER FER UN UPDATE
-      //  Autor canviar = em.find(Autor.class,6563);
-//        canviar.setNomAut("Reus, Joan Manuel");
-//        em.getTransaction().begin();
-//        em.merge(canviar);
-//        em.getTransaction().commit();
-    public void canviaEstatHabitacio(Habitacions habitacio){
+
+    public void canviaEstatHabitacio(Habitacions habitacio, String estat){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("HotelPU");
         EntityManager em = emf.createEntityManager();
         Habitacions estatHabitacio = em.find(Habitacions.class, habitacio.getNumero());
-        estatHabitacio.setEstat("Ocupat");
+        estatHabitacio.setEstat(estat);
         em.getTransaction().begin();
         em.merge(estatHabitacio);
         em.getTransaction().commit();
         em.close();
         emf.close();
+    }
+
+  //  Cercar Estancia per el num Habitacio
+    private Estancies tornaEstancia(Habitacions numHabitacio){
+        
+        TypedQuery<Integer> a = null;
+        TypedQuery<Estancies> b = null;
+        EntityManagerFactory emf = null;
+        EntityManager em = null;
+        Integer num = 0;
+        Estancies estancia = null;
+        try {
+            emf = Persistence.createEntityManagerFactory("HotelPU");
+            em = emf.createEntityManager();          
+                        
+            a = em.createQuery("select max(e.idEstancia) from Estancies e where e.numHabitacio=:pNumHabitacio", Integer.class);
+            //"select e, max(e.idEstancia) from Estancies e where e.numHabitacio=:pNumHabitacio"
+            a.setParameter("pNumHabitacio", numHabitacio);          
+            num = a.getSingleResult();
+            b = em.createQuery("select e from Estancies e where e.idEstancia=:pNum", Estancies.class);
+            b.setParameter("pNum", num);
+            estancia =  b.getSingleResult();
+        } catch (Exception e) {
+            System.err.println("Error: " + e);
+        } finally {
+            em.close();
+            emf.close();
+        }
+       return estancia;
+    }
+    
+
+    
+    //Torna una estanciaHostes pasant una Estancia
+    private EstanciesHostes tornaEstanciaHoste(Estancies estancia){
+        TypedQuery<EstanciesHostes> a = null;
+        EntityManagerFactory emf = null;
+        EntityManager em = null;
+        EstanciesHostes estanciaHoste = null;
+        try {
+            emf = Persistence.createEntityManagerFactory("HotelPU");
+            em = emf.createEntityManager();
+            a = em.createQuery("select e from EstanciesHostes e where e.estanciaId =:pEstancia", EstanciesHostes.class);
+            a.setParameter("pEstancia", estancia);          
+            estanciaHoste = a.getSingleResult();
+
+        } catch (Exception e) {
+            System.err.println("Error: " + e);
+        } finally {
+            em.close();
+            emf.close();
+        }
+       return estanciaHoste;
+    }
+    
+    // Cerca el client per la estancia
+    private Clients tornaClientEstancia(EstanciesHostes estanciaHoste){
+        TypedQuery<Clients> a = null;
+        EntityManagerFactory emf = null;
+        EntityManager em = null;
+        Clients client= null;
+        try {
+            emf = Persistence.createEntityManagerFactory("HotelPU");
+            em = emf.createEntityManager();
+            a = em.createQuery("select c from Clients c where c.estanciesHostesCollection=:pEstanciaHoste", Clients.class);
+            a.setParameter("pEstanciaHoste", estanciaHoste);          
+            client = a.getSingleResult();
+
+        } catch (Exception e) {
+            System.err.println("Error: " + e);
+        } finally {
+            em.close();
+            emf.close();
+        }
+       return client;
+    }
+    
+    //Afeix data sortida a la EstanciHoste
+    public void baixaEstanciaHoste(EstanciesHostes estanciaHostes, Date dataBaixa){
+       EntityManagerFactory emf = Persistence.createEntityManagerFactory("HotelPU");
+       EntityManager em = emf.createEntityManager();
+       EstanciesHostes numEstanciaHoste = em.find(EstanciesHostes.class, estanciaHostes.getIdEstanciaHoste());
+       numEstanciaHoste.setDataSortida(dataBaixa);
+       em.getTransaction().begin();
+        em.merge(numEstanciaHoste);
+        em.getTransaction().commit();
+        em.close();
+        emf.close();
+    }
+    
+   // Afegeix Data Baixa a la Estancia
+    public void baixaEstancia(Estancies estancia, Date dataBaixa){
+      EntityManagerFactory emf = Persistence.createEntityManagerFactory("HotelPU");
+      EntityManager em = emf.createEntityManager(); 
+      Estancies idEstancia = em.find(Estancies.class, estancia.getIdEstancia());
+      idEstancia.setDataSortida(dataBaixa);
+      em.getTransaction().begin();
+      em.merge(idEstancia);
+      em.getTransaction().commit();
+      em.close();
+      emf.close();
     }
 
    
