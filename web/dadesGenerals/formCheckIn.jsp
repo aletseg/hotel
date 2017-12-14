@@ -14,7 +14,7 @@
 <!--       <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen"/> -->
           <link type="text/css" rel="stylesheet" href="css/custom.css"/>
         <link type="text/css" rel="stylesheet" href="css/w3.css"/>
-        
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Formulari Alta Client</title>
     </head>
@@ -115,12 +115,14 @@
                                           </div>    
                       </div>
                       </div>      
-     
-                                    <div class="w3-half">
-                                        <a class="w3-btn w3-teal" href="<c:url value="dadesGestio?opcio=cancelar"/>">Cancelar</a>
-                                        <button class="w3-btn w3-teal" type="submit">Enviar</a>
+                <div class="w3-row-padding w3-section ">
+                                    <div class=" w3-right">
+                                        <a class="w3-btn colorBoto center rodo w3-text-white " href="<c:url value="dadesGestio?opcio=cancelar"/>">Cancelar</a>
+                                     
+                                   
+                                        <button class="w3-btn colorBoto center rodo w3-text-white " type="submit">Enviar</a>
                                     </div>
-                                    
+                            </div>                   
                             </form>
                         </div>    
 

@@ -82,19 +82,26 @@ public class dadesGestio extends HttpServlet {
             case "carregaDades": {
                 String num = request.getParameter("numHab");
                 if(num == ""){
-                    request.setAttribute("Error", "Error al clicar la habitació");
+                    request.setAttribute("error", "Error al clicar la habitació");
                     List<TipoHabitacions> llistaHabitacions = tornaHabitacions();
                     request.setAttribute("llistaHabitacions", llistaHabitacions); 
                     path = "/dadesGenerals/home.jsp";
                 }else{
                 Integer numHab = Integer.parseInt(num);
                 Habitacions habitacio = tornaHabitacio(numHab);
+                if(habitacio.getEstat().equals("Ocupat")){
+                    List<TipoHabitacions> llistaHabitacions = tornaHabitacions();
+                    request.setAttribute("llistaHabitacions", llistaHabitacions); 
+                   request.setAttribute("error","L'habitació está ocupada, no pots fer check-in." );
+                   path="/dadesGenerals/home.jsp";
+                }else{
                 List<Nacionalitats> llistaNac = tornaNacionalitats();
                 List<TipoDocuments> llistaDoc = tornaDocuments();
                 request.setAttribute("habitacio", habitacio);
                 request.setAttribute("llistaNac", llistaNac);
                 request.setAttribute("llistaDoc", llistaDoc);
                 path= "/dadesGenerals/formCheckIn.jsp";
+                }
                 }
                 request.getRequestDispatcher(path).forward(request, response);
                 break;
@@ -171,6 +178,12 @@ public class dadesGestio extends HttpServlet {
              
              Integer numHab = Integer.parseInt(num);
              Habitacions numHabitacioCercat = tornaHabitacio(numHab); 
+             if(numHabitacioCercat.getEstat().equals("Lliure")){
+                    List<TipoHabitacions> llistaHabitacions = tornaHabitacions();
+                    request.setAttribute("llistaHabitacions", llistaHabitacions); 
+                   request.setAttribute("error","L'habitació está lliure, no pots fer check-out." );
+                   path="/dadesGenerals/home.jsp";
+                }else{
              Estancies numEstanciaHab = tornaEstancia(numHabitacioCercat);
              EstanciesHostes estanciaHoste = tornaEstanciaHoste(numEstanciaHab);
              Date dataBaixa = new Date();
@@ -180,6 +193,7 @@ public class dadesGestio extends HttpServlet {
              List<TipoHabitacions> llistaHabitacions = tornaHabitacions();
              request.setAttribute("llistaHabitacions", llistaHabitacions);
              path= "/dadesGenerals/home.jsp";
+                }
                 }
              request.getRequestDispatcher(path).forward(request, response); 
              break;   

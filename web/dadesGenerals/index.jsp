@@ -16,7 +16,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Usuari Erroni</title>
     </head>
-    <body>
+    <body class="indigo lighten-5">
     <div class="nav-wrapper deep-purple darken-4 z-depth-5 valign-wrapper">
           <h1 class="deep-purple-text text-lighten-4 marge">Hostal Sorrento</h1>
       </div>
@@ -32,24 +32,24 @@
      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">D'acord</a> 
     </div>
   </div>
-           <section>
-        <div class="fondo">
+      <section class="container espais ">
+        <div >
             <div class="container">
                 <div class="row s12 m6">
-                    <div class="card medium z-depth-5">
+                    <div class="card medium z-depth-4 rodo">
                         <div class="card-content">
-                           <a class="waves-effect waves-light btn modal-trigger red red lighten-1" href="#modal1"><i class="material-icons" style="font-size:22px">announcement</i></a> 
-                            <span class="card-title center indigo-text">Login</span>
-                            <p class="center-align indigo-text">(Has inserit un usuari o contrasenya incorrecta)</p>
+                            <div class="container">
+                            <span class="card-title center indigo-text margeAll"><b>Login</b></span>
                            
                                 <form id="login" method="post" action="dadesGestio">
                                  <input type="hidden" value="login" name="opcio"/>
                                  <label class="indigo-text lletragran"><b>Usuari:</b></label>
                                  <input type="text" id="usuari" name="usuari"/>
-                                 <h5><label class="indigo-text lletragran">Contrasenya:</label></h5>
+                                 <h5><label class="indigo-text lletragran"><b>Contrasenya:</b></label></h5>
                                  <input type="password" name="contrasenya" />
                                  <button type="submit" class="btn pink darken-3 z-depth-2 right">Enviar</button>
                              </form>
+                            </div>
                         </div>
                 </div>
                 </div>

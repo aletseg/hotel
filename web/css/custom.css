@@ -8,7 +8,12 @@ and open the template in the editor.
     Author     : Estela
 */
 
-
+/*html{
+   font-family: 'Roboto', sans-serif !important;
+}
+body{
+ font-family: 'Roboto', sans-serif !important;    
+}*/
 section{
     margin:5%;
 }
@@ -23,6 +28,9 @@ section{
 
 .lletragran{
     font-size: 16px !important;
+}
+.lletraTitol{
+    font-size: 28px;
 }
 
 .marge{
@@ -56,5 +64,13 @@ background-image: -ms-linear-gradient(top, #c9d4d6 0%, #d6e6d9 50%, #d6e6d9 100%
 
 .paddingALL{
     padding-bottom: 6px !important;
+}
+
+.espais{
+    margin-top: 5%;
+}
+
+.colorBoto{
+    background: #ad1457 !important;
 }
 

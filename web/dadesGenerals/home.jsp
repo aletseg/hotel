@@ -29,7 +29,7 @@
 </ul>
         <nav>
         <div class="nav-wrapper  deep-purple darken-4 z-depth-5 ">
-            <h1 class="brand-logo marge">Recepció</h1>
+            <h1 class="brand-logo marge lletraTitol">Recepció</h1>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a href="dadesGestio?opcio=canviarUsuari" class="lletragran">Cambiar Usuari</a></li>
                 <li><a href="#" class="lletragran">Crear fitxa Policia</a></li>
@@ -65,7 +65,8 @@
                                 <tr>
                              </c:if> 
                              <c:choose>
-                                 <c:when test="${habitacio.tipoHab.idTipo=='DB'}">                                     
+                                 <c:when test="${habitacio.tipoHab.idTipo=='DB'}">
+                                   
                                      <td id="${habitacio.numero}">
                                          <h2>${habitacio.numero} </h2></br>
                                          <p name="${habitacio.numero}"><i class="glyphicon glyphicon-bed" style="font-size: 34px"  name="${estat}"></i></p>
