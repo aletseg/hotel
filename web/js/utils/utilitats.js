@@ -5,7 +5,7 @@
  */
 function estatHabitacions(){
     $("i[name='lliure']").addClass("light-green-text accent-4") ;
-    $("i[name='ocupat']").addClass("red-text text-accent-4") ;
+    $("i[name='ocupat']").addClass("pink-text text-darken-4") ;
     $("i[name='noDisponible'").addClass("grey-text text-lighten-1");
 }
 

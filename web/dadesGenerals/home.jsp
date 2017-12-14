@@ -18,7 +18,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Home</title>
     </head>
-    <body>
+    <body class="indigo lighten-5">
         
        <!-- Dropdown Structure -->
 <ul id="dropdown1" class="dropdown-content">
@@ -28,7 +28,7 @@
   <li><a href="#!">Canviar Preus Habitacions</a></li>
 </ul>
         <nav>
-        <div class="nav-wrapper  deep-purple darken-4 z-depth-5 ">
+        <div class="nav-wrapper  deep-purple darken-4 z-depth-5">
             <h1 class="brand-logo marge lletraTitol">Recepció</h1>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a href="dadesGestio?opcio=canviarUsuari" class="lletragran">Cambiar Usuari</a></li>
@@ -40,8 +40,8 @@
         </div>
         </nav> 
       
-        <section class="col s12">
-        <div class="container z-depth-5 rodo" id="habitacions">
+        <section class="col s12 ">
+        <div class="container z-depth-4 rodo white" id="habitacions">
             <h1 class="center indigo-text">Habitacions</h1>
             <table class="centered bordered bottomMargin" id="taulaHabitacions">
                 <tr>

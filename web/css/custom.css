@@ -30,7 +30,7 @@ section{
     font-size: 16px !important;
 }
 .lletraTitol{
-    font-size: 28px;
+    font-size: 22px;
 }
 
 .marge{
@@ -72,5 +72,55 @@ background-image: -ms-linear-gradient(top, #c9d4d6 0%, #d6e6d9 50%, #d6e6d9 100%
 
 .colorBoto{
     background: #ad1457 !important;
+}
+
+.marginBaix{
+    margin-bottom: 5%;
+}
+.marginBaixPlus{
+   margin-bottom: 10%; 
+}
+
+.bodyColor{
+    background: #e8eaf6;
+}
+.titolCheck{
+    
+    background: #311b92 ;
+    color: #d1c4e9;
+    
+    -webkit-box-shadow: -1px 11px 22px -4px rgba(122,115,122,1);
+-moz-box-shadow: -1px 11px 22px -4px rgba(122,115,122,1);
+box-shadow: -1px 11px 22px -4px rgba(122,115,122,1);   
+}
+.titolCheck h1 {
+    font-family: 'Roboto', sans-serif !important; 
+    font-weight: bold;
+   font-size: 32px !important;
+   padding: 1%;
+   
+}
+
+.lletra{
+   font-family: 'Roboto', sans-serif !important;  
+}
+.lletraForm{
+    color:#3f51b5;
+}
+.sombra{
+      -webkit-box-shadow: -1px 11px 22px -4px rgba(122,115,122,1);
+-moz-box-shadow: -1px 11px 22px -4px rgba(122,115,122,1);
+box-shadow: -1px 11px 22px -4px rgba(122,115,122,1);    
+}
+
+select{
+    background: white;  
+}
+option{
+   background: white;  
+}
+option:hover{
+    background:#3f51b5;
+    color:#d1c4e9;
 }
 
