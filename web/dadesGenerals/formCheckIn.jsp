@@ -44,6 +44,7 @@
                         <div class="w3-row">
                                 <h2>Formulari Alta Client</h2>
                            </div> 
+                      <div class="paddingALL">
                      <div class="w3-row-padding w3-section">
                                 <div class="w3-half">
 <!--                                     <label>Nom*:</label>-->
@@ -54,6 +55,8 @@
                                     <input type="text" name="cognom" class="w3-input" id="cognom" required placeholder="Llinatge*">
                                 </div>
                                  </div>
+                      </div>
+                      <div class="paddingALL">
                        <div class="w3-row-padding w3-section paddingALL">
                                 <div class="w3-half">
 <!--                                  <label>2º Llinatge:</label>-->
@@ -68,6 +71,8 @@
                                     </select>
                                 </div>
                        </div>
+                      </div>
+                      <div class="paddingALL">
                       <div class="w3-row-padding w3-section paddingALL">
                           <div class="w3-half">
                                     <label>Data Naixement*:</label>
@@ -81,7 +86,8 @@
                                         <label for="dona">Dona</label>
                                          </div>
                       </div>
-                      
+                      </div>
+                      <div class="paddingALL">
                            <div class="w3-row-padding w3-section paddingALL">
                                 <div class="w3-half">
                                     <select required name="tipoDocument" class="w3-select" id="tipoDoc">
@@ -96,26 +102,20 @@
                                 <input type="text" name="numDocument" required class="w3-input" id="numDocument" placeholder="Núm. de Document*"/>
                                 </div>
                            </div>
+                      </div>
+                      <div class="paddingALL">
                       <div class="w3-row-padding w3-section paddingALL">
                                 <div class="w3-half">
-                                    <label> Data Expedicio Document*:</label>
+                                    <label class="w3-text-grey"> Data Expedicio Document*:</label>
                                 <input type="date" name="dataExpedicio" required class="w3-input" placeholder="Data Expedicio Document*"/>
                                 </div>
-                               
-                                
+                               <div class="w3-half">
+                                   <label for="observacions" class="w3-text-grey">Observacions:</label>
+                                            <textarea id="observacions" class="w3-input w3-border" name="observacions" style="resize:none"></textarea>
+                                          </div>    
                       </div>
-                            
-                                
-                  
-                                
-                               
-                              
-                                       
-                                         <div class="w3-half">
-                                            <label for="observacions">Observacions:</label>
-                                            <textarea id="observacions" class="materialize-textarea" name="observacions"></textarea>
-                                          
-                                          </div>
+                      </div>      
+     
                                     <div class="w3-half">
                                         <a class="w3-btn w3-teal" href="<c:url value="dadesGestio?opcio=cancelar"/>">Cancelar</a>
                                         <button class="w3-btn w3-teal" type="submit">Enviar</a>
